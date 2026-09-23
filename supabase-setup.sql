@@ -85,7 +85,10 @@ returns trigger
 language plpgsql
 as $$
 begin
-  if new.is_admin is distinct from old.is_admin then
+  -- Nur Anfragen aus der App blocken. Der SQL-Editor hat keine JWT-Claims,
+  -- damit die Rolle im Dashboard weiterhin vergeben werden kann.
+  if new.is_admin is distinct from old.is_admin
+     and current_setting('request.jwt.claims', true) is not null then
     new.is_admin := old.is_admin;
   end if;
   return new;
