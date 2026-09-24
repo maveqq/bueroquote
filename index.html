@@ -1045,7 +1045,6 @@ window.BQ_INVITE = /type=(invite|recovery|signup)/.test(window.location.hash || 
       const [cursor, setCursor] = useState({ y: today.getFullYear(), m: today.getMonth() });
       const [sheetKey, setSheetKey] = useState(null);
       const [tab, setTab] = useState("monat");
-      const [open, setOpen] = useState(false);
       const [csvText, setCsvText] = useState(null);
       useEffect(() => {
         let alive = true;
@@ -1265,63 +1264,26 @@ window.BQ_INVITE = /type=(invite|recovery|signup)/.test(window.location.hash || 
           style: { ...tile, color: T.inkSoft, fontSize: 12, lineHeight: 1.6 }
         },
         hint
-      )), /* @__PURE__ */ React.createElement("div", { className: "relative", style: { height: 0 } }, /* @__PURE__ */ React.createElement(
+      )), /* @__PURE__ */ React.createElement("div", { className: "mt-4" }, /* @__PURE__ */ React.createElement("div", { className: "flex justify-center gap-5" }, [
+        ["monat", "Monat"],
+        ["jahr", "Jahr"],
+        ["einstellungen", "Einstellungen"]
+      ].map(([id, label]) => /* @__PURE__ */ React.createElement(
         "button",
         {
+          key: id,
           type: "button",
-          onClick: () => setOpen((o) => !o),
-          "aria-expanded": open,
-          "aria-label": open ? "Details ausblenden" : "Details einblenden",
-          className: "absolute left-1/2 flex h-6 w-10 items-center justify-center transition",
-          style: { top: 6, transform: "translate(-50%, -50%)", background: "transparent", color: T.inkMuted, opacity: 0.45, zIndex: 10 }
-        },
-        /* @__PURE__ */ React.createElement(
-          "svg",
-          {
-            width: 11,
-            height: 11,
-            viewBox: "0 0 24 24",
-            fill: "none",
-            stroke: "currentColor",
-            strokeWidth: 2,
-            strokeLinecap: "round",
-            strokeLinejoin: "round",
-            style: { transform: open ? "rotate(180deg)" : "none", transition: "transform .2s ease" }
-          },
-          /* @__PURE__ */ React.createElement("polyline", { points: "6 9 12 15 18 9" })
-        )
-      )), /* @__PURE__ */ React.createElement(
-        "div",
-        {
+          onClick: () => setTab(id),
+          className: "pb-1 text-xs transition",
           style: {
-            overflow: "hidden",
-            maxHeight: open ? 40 : 0,
-            opacity: open ? 1 : 0,
-            marginTop: open ? 12 : 0,
-            transition: "max-height .25s ease, opacity .2s ease, margin-top .25s ease"
+            background: "transparent",
+            color: tab === id ? T.ink : T.inkMuted,
+            fontWeight: tab === id ? 600 : 500,
+            borderBottom: tab === id ? `2px solid ${T.accent}` : "2px solid transparent"
           }
         },
-        /* @__PURE__ */ React.createElement("div", { className: "flex justify-center gap-5" }, [
-          ["monat", "Monat"],
-          ["jahr", "Jahr"],
-          ["einstellungen", "Einstellungen"]
-        ].map(([id, label]) => /* @__PURE__ */ React.createElement(
-          "button",
-          {
-            key: id,
-            type: "button",
-            onClick: () => setTab(id),
-            className: "pb-1 text-xs transition",
-            style: {
-              background: "transparent",
-              color: tab === id ? T.ink : T.inkMuted,
-              fontWeight: tab === id ? 600 : 500,
-              borderBottom: tab === id ? `2px solid ${T.accent}` : "2px solid transparent"
-            }
-          },
-          label
-        )))
-      ), tab === "monat" && /* @__PURE__ */ React.createElement("div", { className: "mt-3 p-3", style: card }, /* @__PURE__ */ React.createElement("div", { className: "mb-1 grid grid-cols-7 gap-1 text-center", style: { color: T.inkMuted } }, WD_SHORT.map((w) => /* @__PURE__ */ React.createElement("div", { key: w, className: "py-1", style: { fontSize: 11, fontWeight: 600, letterSpacing: "0.08em" } }, w))), /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-7 gap-1" }, Array.from({ length: leading }).map((_, i) => /* @__PURE__ */ React.createElement("div", { key: `pad-${i}` })), days.map((d) => {
+        label
+      )))), tab === "monat" && /* @__PURE__ */ React.createElement("div", { className: "mt-3 p-3", style: card }, /* @__PURE__ */ React.createElement("div", { className: "mb-1 grid grid-cols-7 gap-1 text-center", style: { color: T.inkMuted } }, WD_SHORT.map((w) => /* @__PURE__ */ React.createElement("div", { key: w, className: "py-1", style: { fontSize: 11, fontWeight: 600, letterSpacing: "0.08em" } }, w))), /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-7 gap-1" }, Array.from({ length: leading }).map((_, i) => /* @__PURE__ */ React.createElement("div", { key: `pad-${i}` })), days.map((d) => {
         const isToday = d.key === todayKey;
         const base = d.cat ? CAT_STYLE[d.cat] : { background: T.surface, color: T.inkMuted, borderColor: T.line };
         return /* @__PURE__ */ React.createElement(
